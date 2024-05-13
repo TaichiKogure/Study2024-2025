@@ -278,4 +278,14 @@ test_loss, test_acc = model.evaluate(x_test,  y_test, verbose=2)
 print('\nTest accuracy:', test_acc)
 
 #%%
+#Pythonの pandas ライブラリを使用することで、複数のエクセルデータを簡単にマージすることができます。
+# 以下に具体的な手順を示します。 まず、pandasをインポートし、エクセルデータをDataFrameとして読み込みます。
+import pandas as pd
 
+df1 = pd.read_excel('file1.xlsx')
+df2 = pd.read_excel('file2.xlsx')
+#次に、pandasの merge ファンクションを用いて2つのデータフレームをマージします。
+# マージキーとなる列を指定するために on 引数を使用します
+merged_df = pd.merge(df1, df2, on='merge_key_column')
+# これで merged_df には2つのエクセルデータがマージされた結果が格納されます。
+# なお、 merge_key_column は実際のエクセルデータの列名に書き換えて下さい。
