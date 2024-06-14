@@ -289,3 +289,5 @@ df2 = pd.read_excel('file2.xlsx')
 merged_df = pd.merge(df1, df2, on='merge_key_column')
 # これで merged_df には2つのエクセルデータがマージされた結果が格納されます。
 # なお、 merge_key_column は実際のエクセルデータの列名に書き換えて下さい。
+
+#%%
