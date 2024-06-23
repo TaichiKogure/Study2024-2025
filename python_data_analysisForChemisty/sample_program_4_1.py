@@ -2,7 +2,7 @@
 """
 @author: hkaneko
 """
-
+#%%
 import matplotlib.figure as figure  # 図の調整に使用
 import matplotlib.pyplot as plt
 import pandas as pd

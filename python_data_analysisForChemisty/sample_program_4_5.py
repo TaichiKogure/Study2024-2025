@@ -10,8 +10,8 @@ from sklearn.decomposition import PCA
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split, cross_val_predict  # クロスバリデーションにより推定値を計算するために使用
 
-max_number_of_principal_components = 13  # 使用する主成分の最大数。説明変数の数より小さい必要があります
-fold_number = 5  # N-fold CV の N
+max_number_of_principal_components = 10  # 使用する主成分の最大数。説明変数の数より小さい必要があります
+fold_number = 9  # N-fold CV の N
 number_of_test_samples = 150  # テストデータのサンプル数
 dataset = pd.read_csv('boston.csv', index_col=0)
 
