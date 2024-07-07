@@ -22,3 +22,4 @@ if __name__ == '__main__':
         makerobo_loop()
     except KeyboardInterrupt:
         makerobo_destroy()
+#レーザー自体はあまり高性能というわけではないし配置も難しいかも。。
