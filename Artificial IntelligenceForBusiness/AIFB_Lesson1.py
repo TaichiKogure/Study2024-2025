@@ -60,9 +60,18 @@ for i in range(1000):
     Q[current_state,next_state] = Q[current_state, next_state] + alpha * TD
 
 # Part 3 - Going into Production
+
+# Mkaing a mapping from a states to the location
+state_to_location = {state: location for location, state in location_to_state.items()}
+
+# Making the final function that will return the optimal route
 def route(stating_location, ending_location):
     route = [stating_location]
     next_location = stating_location
     while(next_location != ending_location):
         stating_state = location_to_state[stating_location]
         next_state = np.argmax(Q[next_location,])
+        next_location = state_to_location[next_state]
+        route.append(next_location)
+        stating_location = next_location
+
