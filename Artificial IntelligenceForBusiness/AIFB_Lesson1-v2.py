@@ -30,7 +30,7 @@ R = np.array([[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],# A
              [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],# D
              [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],# E
              [0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],# F
-             [0, 0, 1, 0, 0, 0, 1000, 1, 0, 0, 0, 0],# G
+             [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0],# G
              [0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1],# H
              [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0],# I
              [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0],# J
@@ -66,6 +66,9 @@ state_to_location = {state: location for location, state in location_to_state.it
 
 # Making the final function that will return the optimal route
 def route(stating_location, ending_location):
+    R_new = np.copy(R) #COPY original R matrix
+    ending_state = location_to_state[ending_location]
+    R_new[ending_state,ending_state] = 1000
     route = [stating_location]
     next_location = stating_location
     while(next_location != ending_location):
