@@ -38,28 +38,10 @@ R = np.array([[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],# A
              [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0]],# L
              )
 
-# Part 2 - Building the AI solution with Q-learning
-# Initializing the Q-Values
-Q = np.array(np.zeros([12,12]))
+#############################
+# Marge Part 2 and 3 module #
+#############################
 
-# Implementing the Q-Learning process　ここでランダムに移動する仕組み＋報酬が少しでもある方＝通路を選ぶ仕組み。
-for i in range(1000):
-    current_state = np.random.randint(0,12)#include 0 to exculde　12 <- !!
-    playable_actions = []
-    for j in range(12):
-        if R[current_state ,j] > 0:     #Actionのjが現在の状態でプレイした場合の報酬がゼロ以上＝プレイできるアクション
-            playable_actions.append(j)  #↑の時はjを追加する。
-
-    #12個のプレイ可能なアクションからランダムに選ぶ = a
-    next_state = np.random.choice(playable_actions)
-
-    #時間変化を記載する。　→　TempiralDifference TDt (St,at) = R(St,at) + gamma max(a)(Q(st+1, a))-Q(St,at)
-    TD = R[current_state, next_state] + gamma * Q[next_state, np.argmax(Q[next_state,])] - Q[current_state, next_state]
-
-    # Q-value by applying the Bellman equation:
-    Q[current_state,next_state] = Q[current_state, next_state] + alpha * TD
-
-# Part 3 - Going into Production
 
 # Mkaing a mapping from a states to the location　ステート０１２から配置ABCを引っ張る辞書を作る。
 state_to_location = {state: location for location, state in location_to_state.items()}
@@ -71,6 +53,23 @@ def route(starting_location, ending_location):
 
     R_new[ending_state,ending_state] = 1000
 
+    Q = np.array(np.zeros([12, 12]))  # Initializing the Q-Values
+    for i in range(1000):  # Implementing the Q-Learning process　ここでランダムに移動する仕組み＋報酬が少しでもある方＝通路を選ぶ仕組み。
+        current_state = np.random.randint(0, 12)  # include 0 to exculde　12 <- !!
+        playable_actions = []
+        for j in range(12):
+            if R_new[current_state, j] > 0:  # Actionのjが現在の状態でプレイした場合の報酬がゼロ以上＝プレイできるアクション
+                playable_actions.append(j)  # ↑の時はjを追加する。
+
+        # 12個のプレイ可能なアクションからランダムに選ぶ = a
+        next_state = np.random.choice(playable_actions)
+        # 時間変化を記載する。　→　TempiralDifference TDt (St,at) = R(St,at) + gamma max(a)(Q(st+1, a))-Q(St,at)
+        TD = R_new[current_state, next_state] + gamma * Q[next_state, np.argmax(Q[next_state,])] - Q[
+            current_state, next_state]
+
+        # Q-value by applying the Bellman equation:
+        Q[current_state, next_state] = Q[current_state, next_state] + alpha * TD
+
     route = [starting_location]                              #ルートの起点はスタートの配置
     next_location = starting_location                        #次の配置はまずはスタートの配置から
     while(next_location != ending_location):                 #次の配置が最後の配置になるまで続ける
@@ -81,7 +80,12 @@ def route(starting_location, ending_location):
         starting_location = next_location                    #初期ロケーションは次にロケーションに更新
     return route
 
+# middle state
+
+def best_route(starting_location, intermidiatery_location, ending_location):#中間地点を設定
+    return route(starting_location, intermidiatery_location) + route(intermidiatery_location, ending_location) [1:]#＜左一つ目をのぞいて二つ目から数える
 
 print('Route:')
-route('E','G')
+best_route('E','D','A')
+
 

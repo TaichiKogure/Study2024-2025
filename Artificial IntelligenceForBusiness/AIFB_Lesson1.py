@@ -1,3 +1,4 @@
+
 import numpy as np
 
 # Setting the parameters gamma and alpha for the Q-learning
@@ -70,12 +71,11 @@ def route(stating_location, ending_location):
     next_location = stating_location
     while(next_location != ending_location):
         starting_state = location_to_state[stating_location]
-        next_state = np.argmax(Q[starting_state,])
+        next_state = np.argmax(Q[starting_state])
         next_location = state_to_location[next_state]
         route.append(next_location)
         stating_location = next_location
     return route
 
 
-print('Route:')
-route('E','G')
+print(route('E','G'))

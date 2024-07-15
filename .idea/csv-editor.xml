@@ -59,7 +59,28 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/python_data_analysisForChemisty/sample_data/molecules_with_logS.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/python_data_analysisForChemisty/sample_data/molecules_with_melting_point.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/python_data_analysisForChemisty/sample_data/molecules_with_pIC50.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/python_data_analysisForChemisty/sample_data/molecules_with_pIC50_class.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
