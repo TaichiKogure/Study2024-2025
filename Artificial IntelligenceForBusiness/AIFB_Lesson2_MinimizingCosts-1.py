@@ -72,6 +72,36 @@ class Environment(Object):
             self.current_rate_data = self.min_rate_data
 
         # Computing the Delta of Intrinsic Temperature
+        past_intrinsic_temperature = self.intrinsic_temperature #差分を取るために過去温度を定義
+        self.intrinsic_temperature = (self.atmospheric_temperature + 1.25 * self.current_number_users
+                                      + 1.25 * self.current_rate_data) #updateenvに合わせたIntrinsictemp
+        delta_intrinsic_temperature = self.intrinsic_temperature - past_intrinsic_temperature
+        # Computing the Delta of Temperature cause by the AI
+        if (direction == -1):
+            delta_temperature_ai = -energy_ai  #冷却された場合はマイナス
+        elif (direction == 1):
+            delta_temperature_ai = energy_ai   #加熱された場合はプラス
+
+        # Updating the new Server's Temperature when there is the AI
+        self.temperature_ai += delta_intrinsic_temperature + delta_temperature_ai
+        # Updating the new Server's Temperature when there is the no AI
+        self.total_energy_noai += delta_intrinsic_temperature
+
+        # GETTING GAME OVER
+        if (self.temperature_ai < self.min_temperature):
+            if (self.train == 1):
+                self.game_over = 1#温度下がりすぎたらしてたらゲームオーバー
+            else:
+                self.temperature_ai = self.optimal_temperature[0]
+                self.total_energy_ai += self.optimal_temperature[0] - self.temperature_ai
+                # 18度-Ai制御温度分を消費エネルギとして足す
+        elif(self.tempereture_ai > self.max_temperature):
+            if (self.train == 1):
+                self.game_over = 1#温度超過してたらゲームオーバー
+            else:
+                self.tempereture_ai = self.optimal_temperature[1]
+                self.total_energy_ai += self.tempereture_ai - self.optimal_temperature[1]
+                #ai制御温度-24度ぶんを消費エネルギとしてたす。
 
 
 
