@@ -31,7 +31,21 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/python_data_analysisForChemisty/pca_loadings.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/python_data_analysisForChemisty/pcr_standard_regression_coefficients.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/python_data_analysisForChemisty/sample_data/beer_consumption.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
@@ -81,6 +95,13 @@
           </value>
         </entry>
         <entry key="/python_data_analysisForChemisty/sample_data/molecules_with_pIC50_class.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/python_data_analysisForChemisty/sample_data/virtual_resin_prediction.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
