@@ -103,7 +103,14 @@ class Environment(Object):
                 self.total_energy_ai += self.tempereture_ai - self.optimal_temperature[1]
                 #ai制御温度-24度ぶんを消費エネルギとしてたす。
 
+        # UPDATE THE SCORES
+        # Updating the Total Energy spent by the AI
+        self.total_energy_ai += energy_ai
+        # Updating the Total Energy spent by the server's cooling system when there is no AI
+        self.total_energy_noai += energy_noai
 
+        # SCALING THE NEXT STATE
+        scaled_temperature_ai = (self.tempereture_ai - self.min_temperature) / (self.max_temperature - self.min_temperature)
 
     # MAKING A METHOD THAT RESETS THE ENVIRONMENT
 
