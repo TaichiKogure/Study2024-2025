@@ -24,18 +24,18 @@ actions = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
 # Defining the rewards　>＞ 最初の列はAが移動できる方向を示す。AからはBにのみ動けるので二つ目が１他は０
 
-R = np.array([[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],# A
-             [1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0],# B
-             [0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],# C
-             [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],# D
-             [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],# E
-             [0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],# F
-             [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0],# G
-             [0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1],# H
-             [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0],# I
-             [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0],# J
-             [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],# K
-             [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0]],# L
+R = np.array([[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],  # A
+              [1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0],  # B
+              [0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],  # C
+              [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],  # D
+              [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],  # E
+              [0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],  # F
+              [0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0],  # G
+              [0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1],  # H
+              [0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0],  # I
+              [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0],  # J
+              [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],  # K
+              [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0]],  # L
              )
 
 #############################
@@ -46,12 +46,13 @@ R = np.array([[0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],# A
 # Mkaing a mapping from a states to the location　ステート０１２から配置ABCを引っ張る辞書を作る。
 state_to_location = {state: location for location, state in location_to_state.items()}
 
+
 # Making the final function that will return the optimal route
 def route(starting_location, ending_location):
-    R_new = np.copy(R)                                       #COPY original R matrix
-    ending_state = location_to_state[ending_location]        #ゴールの数字＝ステートは目指す配置のステートと定義
+    R_new = np.copy(R)  #COPY original R matrix
+    ending_state = location_to_state[ending_location]  #ゴールの数字＝ステートは目指す配置のステートと定義
 
-    R_new[ending_state,ending_state] = 1000
+    R_new[ending_state, ending_state] = 1000
 
     Q = np.array(np.zeros([12, 12]))  # Initializing the Q-Values
     for i in range(1000):  # Implementing the Q-Learning process　ここでランダムに移動する仕組み＋報酬が少しでもある方＝通路を選ぶ仕組み。
@@ -70,22 +71,25 @@ def route(starting_location, ending_location):
         # Q-value by applying the Bellman equation:
         Q[current_state, next_state] = Q[current_state, next_state] + alpha * TD
 
-    route = [starting_location]                              #ルートの起点はスタートの配置
-    next_location = starting_location                        #次の配置はまずはスタートの配置から
-    while(next_location != ending_location):                 #次の配置が最後の配置になるまで続ける
-        starting_state = location_to_state[starting_location]#開始時のロケーション＝文字をステート＝数字で定義
-        next_state = np.argmax(Q[starting_state,])           #次のステートは初期ステートのQ最大値[,]はなくてもOK
-        next_location = state_to_location[next_state]        #次のロケーションをステートから引用
-        route.append(next_location)                          #ルートリストに次のロケーションを追加
-        starting_location = next_location                    #初期ロケーションは次にロケーションに更新
+    route = [starting_location]  #ルートの起点はスタートの配置
+    next_location = starting_location  #次の配置はまずはスタートの配置から
+    while (next_location != ending_location):  #次の配置が最後の配置になるまで続ける
+        starting_state = location_to_state[starting_location]  #開始時のロケーション＝文字をステート＝数字で定義
+        next_state = np.argmax(Q[starting_state,])  #次のステートは初期ステートのQ最大値[,]はなくてもOK
+        next_location = state_to_location[next_state]  #次のロケーションをステートから引用
+        route.append(next_location)  #ルートリストに次のロケーションを追加
+        starting_location = next_location  #初期ロケーションは次にロケーションに更新
     return route
+
 
 # middle state
 
-def best_route(starting_location, intermidiatery_location, ending_location):#中間地点を設定
-    return route(starting_location, intermidiatery_location) + route(intermidiatery_location, ending_location) [1:]#＜左一つ目をのぞいて二つ目から数える
+def best_route(starting_location, intermidiatery_location, ending_location):  #中間地点を設定
+    return route(starting_location, intermidiatery_location) + route(intermidiatery_location, ending_location)[
+                                                               1:]  #＜左一つ目をのぞいて二つ目から数える
 
-print('Route:')
-best_route('E','D','A')
 
+print('Route:', best_route('E','D','A'))
+
+#best_route('E', 'D', 'A') <- コンソール上から入力して応答を見る。か、↑のPrintの構文の中にbest_routeを追加して計算する。
 
