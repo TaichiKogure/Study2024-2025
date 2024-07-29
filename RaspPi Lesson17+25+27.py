@@ -1,4 +1,4 @@
-#Lesson17+25
+# Lesson17+25+27
 
 from gpiozero import Button, MCP3008
 import matplotlib.pyplot as plt
@@ -6,6 +6,12 @@ from time import sleep, time
 import math
 import csv
 import threading
+
+# for Lesson 27
+import board
+import adafruit_dht
+makerobo_dhtDevice = adafruit_dht.DHT11(board.D16)
+
 
 #Lesson 25
 import os
@@ -40,20 +46,22 @@ def makerobo_read():
 x = []
 y1 = []
 y2 = []
+y3 = []
+H1 = []
 
 # csvファイル名設定
-csvfile = "Temp_Data_2sensor-2.csv"
+csvfile = "Temp_Data_2sensor-3.csv"
 csv_writer = csv.writer(open(csvfile, "w"))
-csv_writer.writerow(["time", "temp_C_sensor1", "temp_C_sensor2"])
+csv_writer.writerow(["time", "temp_C_sensor1", "temp_C_sensor2","temp_C_sensor3","humidity"])
 
 
-def makerobo_print(x):
-    if x == 1:
-        print('Better')
-    if x == 0:
-        print('Too Hot !!')
+#def makerobo_print(x):
+    # if x == 1:
+    #     print('Better')
+    # if x == 0:
+    #     print('Too Hot !!')
 
-def makerobo_loop(runtime):
+def makerobo_loop(runtime, time):
     start_time = time()
     makerobo_Status = 1
     makerobo_tmp = 1
@@ -87,21 +95,50 @@ def makerobo_loop(runtime):
         if makerobo_read() != None:
             print("Current tempereture on Sensor2 : %0.3f C" % makerobo_read())
 
+        #Lesson27 module
+        try:
+            TEMP_C_with_Humidity = makerobo_dhtDevice.temperature
+            humidity = makerobo_dhtDevice.humidity
+            print("Temperature on Sensor3 : {:.f} C Humidity:{}% ".format(TEMP_C_with_Humidity, humidity))
+        except RuntimeError as error:
+            print(error.args[0])
+            time.sleep(2)
+            continue
+
+        except Exception as error:
+            makerobo_dhtDevice.exit()
+            raise error
+        time.sleep(2)
+
         # Update the graph
         plt.cla()  # Clear axis is not necessary as both plots are on same graph 
         plt.plot(x, y1, label='Temp_C_S1')
         plt.plot(x, y2, label='Temp_C_S2')
+        plt.plot(x, y3, label='Temp_C_S3')
         plt.xlabel('Time')
         plt.ylabel('Temperature (Celsius)')
-        plt.ylim([25, 30])  # Assumes similar range for both sensors
+        plt.ylim([20, 35])  # Assumes similar range for both sensors
         plt.legend()  # Displays the legend on the plot
-        plt.pause(0.3)
+        plt.pause(0.1)
+
+        plt.cla()  # Clear axis is not necessary as both plots are on same graph
+        plt.plot(x, H1, label='Temp_C_S1')
+
+        plt.xlabel('Time')
+        plt.ylabel('Humidity[%]')
+        plt.ylim([20, 100])  # Assumes similar range for both sensors
+        plt.legend()  # Displays the legend on the plot
+        plt.pause(0.1)
+
         sleep(10)
         
         x.append((current_time - start_time)/60)
         y1.append(temp_c)
         y2.append(makerobo_read())
-        csv_writer.writerow([x[-1], y1[-1], y2[-1]])  # csvに書き出し
+        y3.append(TEMP_C_with_Humidity)
+        H1.append(humidity)
+
+        csv_writer.writerow([x[-1], y1[-1], y2[-1]], y3[-1], H1[-1])  # csvに書き出し
         
 def destroy():
     pass
