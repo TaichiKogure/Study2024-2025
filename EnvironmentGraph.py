@@ -2,17 +2,18 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # CSVファイルを読み込む
-df = pd.read_csv('EnvInfodata01.csv')
+# df = pd.read_csv('EnvInfodata01.csv')
+df = pd.read_csv('Env_data.csv')
 
 # 'current_time' 列を datetime フォーマットに変換
 df['current_time'] = pd.to_datetime(df['current_time'])
 
 # Specify the X-axis range
-start_date = pd.to_datetime('2024-08-02 07:30:00')
-end_date = pd.to_datetime('2024-08-06 22:00:00')
+start_date = pd.to_datetime('2024-08-06 18:30:00')
+end_date = pd.to_datetime('2024-08-06 23:50:00')
 
 # Create subplots for each column
-fig, axs = plt.subplots(4, sharex=True, figsize=(12, 12))  # Graph size changed
+fig, axs = plt.subplots(5, sharex=True, figsize=(12, 12))  # Graph size changed
 
 # CO2 Value
 axs[0].plot(df['current_time'], df['co2_value'], color='red')  # Color changed
@@ -39,10 +40,10 @@ axs[3].set_xlim([start_date, end_date])  # X-axis range specified
 axs[3].set_ylim([35, 70])  # Y-axis range specified
 
 # Gas Resistance
-# axs[4].plot(df['current_time'], df['gas_resistance'], color='orange')  # Color changed
-# axs[4].set_title('Gas Resistance')
-# axs[4].set_xlim([start_date, end_date])  # X-axis range specified
-# axs[4].set_ylim([0, 50000])  # Y-axis range specified
+axs[4].plot(df['current_time'], df['gas_resistance'], color='orange')  # Color changed
+axs[4].set_title('Gas Resistance')
+axs[4].set_xlim([start_date, end_date])  # X-axis range specified
+axs[4].set_ylim([80000, 100000])  # Y-axis range specified
 
 # Optional - Air Quality if column exists
 # axs[5].plot(df['current_time'], df['air_quality'], color='pink') # Color changed
