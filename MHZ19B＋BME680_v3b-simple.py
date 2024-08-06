@@ -15,7 +15,7 @@ def read_co2():
 
 
 def write_to_csv(current_time, co2_value, temp_press_hum_info):
-    with open('data.csv', 'a', newline='') as f:
+    with open('Env_data.csv', 'a', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=["current_time", "co2_value", "temperature", "pressure", "humidity",
                                                "gas_resistance"])
         if f.tell() == 0:
@@ -30,11 +30,11 @@ def write_to_csv(current_time, co2_value, temp_press_hum_info):
 def temperature_pressure_humidity(sensor):
     info = {}
     if sensor.get_sensor_data():
-        info['temperature'] = sensor.data.temperature
-        info['pressure'] = sensor.data.pressure
-        info['humidity'] = sensor.data.humidity
+        info['temperature'] = round(sensor.data.temperature, 2)  # 小数点以下2桁まで丸める
+        info['pressure'] = round(sensor.data.pressure, 2)  # 小数点以下2桁まで丸める
+        info['humidity'] = round(sensor.data.humidity, 2)  # 小数点以下2桁まで丸める
         if sensor.data.heat_stable:
-            info['gas_resistance'] = sensor.data.gas_resistance
+            info['gas_resistance'] = round(sensor.data.gas_resistance, 1)  # 小数点以下1桁まで丸める
 
     return info
 
