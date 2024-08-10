@@ -1,0 +1,123 @@
+>>> %Run FlaskServeSetting1.py
+ * Serving Flask app 'FlaskServeSetting1'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8888
+ * Running on http://192.168.3.47:8888
+Press CTRL+C to quit
+{'pressure': '989.53hPa', 'temperature': '27.09C'}
+[2024-08-11 00:58:30,190] ERROR in app: Exception on /data [POST]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/koguretaichi/Documents/Flask/FlaskServeSetting1.py", line 32, in handle_data
+    df = pd.read_csv('picodata.csv')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/koguretaichi/.local/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/koguretaichi/.local/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 626, in _read
+    return parser.read(nrows)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/koguretaichi/.local/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1923, in read
+    ) = self._engine.read(  # type: ignore[attr-defined]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/koguretaichi/.local/lib/python3.11/site-packages/pandas/io/parsers/c_parser_wrapper.py", line 234, in read
+    chunks = self._reader.read_low_memory(nrows)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "parsers.pyx", line 838, in pandas._libs.parsers.TextReader.read_low_memory
+  File "parsers.pyx", line 905, in pandas._libs.parsers.TextReader._read_rows
+  File "parsers.pyx", line 874, in pandas._libs.parsers.TextReader._tokenize_rows
+  File "parsers.pyx", line 891, in pandas._libs.parsers.TextReader._check_tokenize_status
+  File "parsers.pyx", line 2061, in pandas._libs.parsers.raise_parser_error
+pandas.errors.ParserError: Error tokenizing data. C error: Expected 2 fields in line 338, saw 3
+
+192.168.3.49 - - [11/Aug/2024 00:58:30] "POST /data HTTP/1.0" 500 -
+{'pressure': '989.56hPa', 'temperature': '27.06C'}
+[2024-08-11 00:58:40,365] ERROR in app: Exception on /data [POST]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/koguretaichi/Documents/Flask/FlaskServeSetting1.py", line 32, in handle_data
+    df = pd.read_csv('picodata.csv')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/koguretaichi/.local/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/koguretaichi/.local/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 626, in _read
+    return parser.read(nrows)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/koguretaichi/.local/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1923, in read
+    ) = self._engine.read(  # type: ignore[attr-defined]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/koguretaichi/.local/lib/python3.11/site-packages/pandas/io/parsers/c_parser_wrapper.py", line 234, in read
+    chunks = self._reader.read_low_memory(nrows)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "parsers.pyx", line 838, in pandas._libs.parsers.TextReader.read_low_memory
+  File "parsers.pyx", line 905, in pandas._libs.parsers.TextReader._read_rows
+  File "parsers.pyx", line 874, in pandas._libs.parsers.TextReader._tokenize_rows
+  File "parsers.pyx", line 891, in pandas._libs.parsers.TextReader._check_tokenize_status
+  File "parsers.pyx", line 2061, in pandas._libs.parsers.raise_parser_error
+pandas.errors.ParserError: Error tokenizing data. C error: Expected 2 fields in line 338, saw 3
+
+192.168.3.49 - - [11/Aug/2024 00:58:40] "POST /data HTTP/1.0" 500 -
+{'pressure': '989.56hPa', 'temperature': '27.06C'}
+[2024-08-11 00:58:50,536] ERROR in app: Exception on /data [POST]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 2525, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1822, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1820, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/flask/app.py", line 1796, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/koguretaichi/Documents/Flask/FlaskServeSetting1.py", line 32, in handle_data
+    df = pd.read_csv('picodata.csv')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/koguretaichi/.local/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/koguretaichi/.local/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 626, in _read
+    return parser.read(nrows)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/koguretaichi/.local/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1923, in read
+    ) = self._engine.read(  # type: ignore[attr-defined]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/koguretaichi/.local/lib/python3.11/site-packages/pandas/io/parsers/c_parser_wrapper.py", line 234, in read
+    chunks = self._reader.read_low_memory(nrows)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "parsers.pyx", line 838, in pandas._libs.parsers.TextReader.read_low_memory
+  File "parsers.pyx", line 905, in pandas._libs.parsers.TextReader._read_rows
+  File "parsers.pyx", line 874, in pandas._libs.parsers.TextReader._tokenize_rows
+  File "parsers.pyx", line 891, in pandas._libs.parsers.TextReader._check_tokenize_status
+  File "parsers.pyx", line 2061, in pandas._libs.parsers.raise_parser_error
+pandas.errors.ParserError: Error tokenizing data. C error: Expected 2 fields in line 338, saw 3
+
+192.168.3.49 - - [11/Aug/2024 00:58:50] "POST /data HTTP/1.0" 500 -
+
