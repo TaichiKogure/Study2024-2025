@@ -1,17 +1,17 @@
-from machine import Pin, I2C
+from machine import Pin, I2C, ADC
 from time import sleep
 import BME280
-from lcd1602 import LCD
+from I2C_LCD import TWI_LCD
 
 # Initialize I2C communication for BME280 sensor
 i2c1 = I2C(0, scl=Pin(21), sda=Pin(20), freq=10000)
 
 # Initialize I2C communication for LCD;
-# Set SDA to pin 20, SCL to pin 21, and frequency to 400kHz
-i2c2 = I2C(0, sda=Pin(18), scl=Pin(19), freq=400000)
+# Set SDA to pin 0, SCL to pin 1, and frequency to 400kHz
+i2c2 = I2C(1, sda=Pin(18), scl=Pin(19), freq=400000)
 
 # Create an LCD object for interfacing with the LCD1602 display
-lcd = LCD(i2c2)
+lcd = TWI_LCD(i2c2, 0x27)
 
 while True:
     try:
@@ -27,8 +27,9 @@ while True:
         print('Pressure: ', pres)
 
         # Display the sensor readings on the LCD
-        lcd.clear()
-        lcd.message('Temp: ' + tempC + '\nPres: ' + pres)
+        lcd.clr_home()
+        lcd.goto_xy(1, 0)
+        lcd.put_str('Temp: ' + tempC + '\nPres: ' + pres)
 
     except Exception as e:
         # Handle any exceptions during sensor reading

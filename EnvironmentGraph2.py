@@ -11,10 +11,10 @@ df['current_time'] = pd.to_datetime(df['current_time'])
 
 # Specify the X-axis range
 start_date = pd.to_datetime('2024-08-06 18:30:00')
-end_date = pd.to_datetime('2024-08-09 23:50:00')
+end_date = pd.to_datetime('2024-08-10 23:50:00')
 
 # Create subplots for each column
-fig, axs = plt.subplots(5, sharex=True, figsize=(12, 14))  # Graph size changed, and added 2 more plots
+fig, axs = plt.subplots(5, sharex=True, figsize=(10, 12))  # Graph size changed, and added 2 more plots
 
 # CO2 Value
 axs[0].plot(df['current_time'], df['co2_value'], color='blue')  # Changed line graph to bar graph
