@@ -10,7 +10,7 @@ df = pd.read_csv('Env_data.csv')
 df['current_time'] = pd.to_datetime(df['current_time'])
 
 # Specify the X-axis range
-start_date = pd.to_datetime('2024-08-06 18:30:00')
+start_date = pd.to_datetime('2024-08-08 18:30:00')
 end_date = pd.to_datetime('2024-08-10 23:50:00')
 
 # Create subplots for each column
