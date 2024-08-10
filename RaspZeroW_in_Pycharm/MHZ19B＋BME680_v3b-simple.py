@@ -15,7 +15,7 @@ def read_co2():
 
 
 def write_to_csv(current_time, co2_value, temp_press_hum_info):
-    with open('Env_data.csv', 'a', newline='') as f:
+    with open('../Env_data.csv', 'a', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=["current_time", "co2_value", "temperature", "pressure", "humidity",
                                                "gas_resistance"])
         if f.tell() == 0:
