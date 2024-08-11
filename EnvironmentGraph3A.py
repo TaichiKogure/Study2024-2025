@@ -11,7 +11,7 @@ df_picodata = pd.read_csv('PicodataX.csv')
 df['current_time'] = pd.to_datetime(df['current_time'])
 
 # Specify the X-axis range
-start_date = pd.to_datetime('2024-08-08 18:30:00')
+start_date = pd.to_datetime('2024-08-10 18:30:00')
 end_date = pd.to_datetime('2024-08-11 23:50:00')
 
 # Create subplots for each column
@@ -60,7 +60,7 @@ axs[0].plot(df_picodata_resampled.index, df_picodata_resampled['Tempereture'], c
 axs[0].set_title('PicoSensor Temperature')
 axs[0].set_xlabel('time')
 axs[0].set_ylabel('Temperature')
-axs[0].set_ylim([24, 42])
+axs[0].set_ylim([27, 42])
 
 # Make some assumption about the columns of df_picodata for Pressure
 axs[1].plot(df_picodata_resampled.index, df_picodata_resampled['Pressure'], color='red')
