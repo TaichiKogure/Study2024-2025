@@ -5,7 +5,6 @@ from mpl_toolkits.mplot3d import Axes3D  # Import Axes3D for 3D plots
 
 # CSVファイルを読み込む
 df = pd.read_csv('Env_data.csv')
-df_picodata = pd.read_csv('PicodataX.csv')
 
 # 'current_time' 列を datetime フォーマットに変換
 df['current_time'] = pd.to_datetime(df['current_time'])
@@ -47,27 +46,8 @@ axs[4].set_title('Gas Resistance')
 axs[4].set_xlim([start_date, end_date])
 axs[4].set_ylim([30000, 180000])
 
-# Make some assumption about the columns of df_picodata for Temperature
-plt.figure(figsize=(10, 6))
-plt.plot(df_picodata['current_time'], df_picodata['Tempereture'])
-plt.title('PicoSensor Temperature')
-plt.xlabel('time')
-plt.ylabel('Temperature')
-plt.ylim([24, 42])
 fig.autofmt_xdate()
 plt.tight_layout(pad=5.0)
-plt.show()
-
-# Make some assumption about the columns of df_picodata for Pressure
-plt.figure(figsize=(10, 6))
-plt.plot(df_picodata['current_time'], df_picodata['Pressure'])
-plt.title('PicoSensor Pressure')
-plt.xlabel('time')
-plt.ylabel('Pressure')
-plt.ylim([980, 1000])
-fig.autofmt_xdate()
-plt.tight_layout(pad=5.0)
-plt.show()
 
 # Create a new jointplot for CO2 Value vs Gas Resistance
 sns.jointplot(data=df, x='co2_value', y='gas_resistance', kind='scatter')
@@ -82,8 +62,10 @@ ax.set_xlabel('CO2 Value')
 ax.set_ylabel('Gas Resistance')
 ax.set_zlabel('Humidity')
 
+
 # Show the plots
 plt.show()
 
-# TerminalからSCPコマンドでラズパイの所定ファイルをPyCharmの作業フォルダに引っ張るコマンド
-# (base) koguretaichi@Macbookprogre / % scp koguretaichi@raspberrypiG2.local:/home/koguretaichi/Env_data.csv /Users/koguretaichi/PycharmProjects/Study2024-2025
+#TerminalからSCPコマンドでラズパイの所定ファイルをPyCharmの作業フォルダに引っ張るコマンド
+#(base) koguretaichi@Macbookprogre / % scp koguretaichi@raspberrypiG2.local:/home/koguretaichi/Env_data.csv /Users/koguretaichi/PycharmProjects/Study2024-2025
+

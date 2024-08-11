@@ -47,24 +47,28 @@ axs[4].set_title('Gas Resistance')
 axs[4].set_xlim([start_date, end_date])
 axs[4].set_ylim([30000, 180000])
 
+fig, axs = plt.subplots(2, figsize=(10, 6))
+
+# Convert 'current_time' to datetime
+df_picodata['current_time'] = pd.to_datetime(df_picodata['current_time'])
+
+# Resample the time series data at 1-minute intervals
+df_picodata_resampled = df_picodata.resample('1T', on='current_time').mean()
+
 # Make some assumption about the columns of df_picodata for Temperature
-plt.figure(figsize=(10, 6))
-plt.plot(df_picodata['current_time'], df_picodata['Tempereture'])
-plt.title('PicoSensor Temperature')
-plt.xlabel('time')
-plt.ylabel('Temperature')
-plt.ylim([24, 42])
-fig.autofmt_xdate()
-plt.tight_layout(pad=5.0)
-plt.show()
+axs[0].plot(df_picodata_resampled.index, df_picodata_resampled['Tempereture'], color='blue')
+axs[0].set_title('PicoSensor Temperature')
+axs[0].set_xlabel('time')
+axs[0].set_ylabel('Temperature')
+axs[0].set_ylim([24, 42])
 
 # Make some assumption about the columns of df_picodata for Pressure
-plt.figure(figsize=(10, 6))
-plt.plot(df_picodata['current_time'], df_picodata['Pressure'])
-plt.title('PicoSensor Pressure')
-plt.xlabel('time')
-plt.ylabel('Pressure')
-plt.ylim([980, 1000])
+axs[1].plot(df_picodata_resampled.index, df_picodata_resampled['Pressure'], color='red')
+axs[1].set_title('PicoSensor Pressure')
+axs[1].set_xlabel('time')
+axs[1].set_ylabel('Pressure')
+axs[1].set_ylim([970, 1000])
+
 fig.autofmt_xdate()
 plt.tight_layout(pad=5.0)
 plt.show()
