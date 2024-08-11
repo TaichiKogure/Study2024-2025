@@ -17,6 +17,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/PicodataX.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/python_data_analysisForChemisty/beer_consumption.csv">
           <value>
             <Attribute>

@@ -90,4 +90,5 @@ ax.set_zlabel('Humidity')
 plt.show()
 
 # TerminalからSCPコマンドでラズパイの所定ファイルをPyCharmの作業フォルダに引っ張るコマンド
-# (base) koguretaichi@Macbookprogre / % scp koguretaichi@raspberrypiG2.local:/home/koguretaichi/Env_data.csv /Users/koguretaichi/PycharmProjects/Study2024-2025
+# scp koguretaichi@raspberrypiG2.local:/home/koguretaichi/Env_data.csv /Users/koguretaichi/PycharmProjects/Study2024-2025
+# scp koguretaichi@raspberrypiG.local:/home/koguretaichi/Documents/Flask/PicodataX.csv /Users/koguretaichi/PycharmProjects/Study2024-2025
