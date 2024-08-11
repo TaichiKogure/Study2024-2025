@@ -15,7 +15,7 @@ start_date = pd.to_datetime('2024-08-10 18:30:00')
 end_date = pd.to_datetime('2024-08-11 23:50:00')
 
 # Create subplots for each column
-fig, axs = plt.subplots(5, sharex=True, figsize=(10, 12))  # Graph size changed, and added 2 more plots
+fig, axs = plt.subplots(5, sharex=True, figsize=(8, 8))  # Graph size changed, and added 2 more plots
 
 # CO2 Value
 axs[0].plot(df['current_time'], df['co2_value'], color='blue')  # Changed line graph to bar graph
@@ -47,7 +47,7 @@ axs[4].set_title('Gas Resistance')
 axs[4].set_xlim([start_date, end_date])
 axs[4].set_ylim([30000, 180000])
 
-fig, axs = plt.subplots(2, figsize=(10, 6))
+fig, axs = plt.subplots(2, figsize=(8, 8))
 
 # Convert 'current_time' to datetime
 df_picodata['current_time'] = pd.to_datetime(df_picodata['current_time'])
@@ -60,7 +60,7 @@ axs[0].plot(df_picodata_resampled.index, df_picodata_resampled['Tempereture'], c
 axs[0].set_title('PicoSensor Temperature')
 axs[0].set_xlabel('time')
 axs[0].set_ylabel('Temperature')
-axs[0].set_ylim([27, 42])
+axs[0].set_ylim([27, 40])
 
 # Make some assumption about the columns of df_picodata for Pressure
 axs[1].plot(df_picodata_resampled.index, df_picodata_resampled['Pressure'], color='red')

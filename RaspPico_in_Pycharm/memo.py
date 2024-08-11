@@ -183,6 +183,7 @@ while True:
 ####
 #もうちょい修正版
 ####
+
 from machine import Pin, I2C, ADC
 from network import WLAN
 from time import sleep
