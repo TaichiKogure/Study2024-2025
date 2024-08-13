@@ -11,8 +11,12 @@ def release_serial_port():
     os.system('sudo lsof /dev/serial0 | grep python | awk \'{print "kill -9", $2}\' | sh')
 
 
+#def read_co2():
+#    return mh_z19.read()["co2"]
+
 def read_co2():
-    return mh_z19.read()["co2"]
+    # dummy value 0
+    return 0
 
 
 def write_to_csv(current_time, co2_value, temp_press_hum_info):
@@ -23,6 +27,7 @@ def write_to_csv(current_time, co2_value, temp_press_hum_info):
         if f.tell() == 0:
             writer.writeheader()
 
+        data_row = {"current_time": current_time, **temp_press_hum_info}
         data_row = {"current_time": current_time, "co2": co2_value, **temp_press_hum_info}
         writer.writerow(data_row)
 
@@ -80,10 +85,11 @@ if __name__ == '__main__':
         post_data(co2_value, temp_press_hum_info, current_time)
         write_to_csv(current_time, co2_value, temp_press_hum_info)
 
+
         print(f'CO2 Value: {co2_value}')
         print(temp_press_hum_info)
 
-        time.sleep(60)
+        time.sleep(30)
 
 ######
 ### Old Data

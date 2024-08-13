@@ -4,7 +4,7 @@ import seaborn as sns  # Use seaborn for jointplot
 from mpl_toolkits.mplot3d import Axes3D  # Import Axes3D for 3D plots
 
 # CSVファイルを読み込む
-df = pd.read_csv('Env_data.csv')
+df = pd.read_csv('Rasp5/Env_data.csv')
 df_picodata = pd.read_csv('PicodataX.csv')
 
 # 'current_time' 列を datetime フォーマットに変換
@@ -12,7 +12,7 @@ df['current_time'] = pd.to_datetime(df['current_time'])
 
 # Specify the X-axis range
 start_date = pd.to_datetime('2024-08-10 18:30:00')
-end_date = pd.to_datetime('2024-08-12 23:50:00')
+end_date = pd.to_datetime('2024-08-13 19:00:00')
 
 # Create subplots for each column
 fig, axs = plt.subplots(5, sharex=True, figsize=(8, 8))  # Graph size changed, and added 2 more plots

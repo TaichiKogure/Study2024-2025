@@ -3,7 +3,7 @@ from dash import dcc, html
 import pandas as pd
 
 # CSV ファイルからデータを読み込む
-df = pd.read_csv('Env_data.csv')
+df = pd.read_csv('Rasp5/Env_data.csv')
 
 app = dash.Dash(__name__)
 
