@@ -19,6 +19,11 @@ def preprocess_text(text):
     text = normalize_text(text)
     text = re.sub(r'[0-9]', '', text)  # 数字の削除
     text = re.sub(r'\s+', ' ', text)  # 複数の空白を一つにまとめる
+
+    stopwords = ['ため', 'こと', 'とき', '等']
+    pattern = re.compile(r'\b(?:' + '|'.join(stopwords) + r')\b')
+    text = pattern.sub('', text)
+
     return text
 
 
@@ -189,7 +194,7 @@ cooccurrence_df.drop(columns=['Pair'], inplace=True)
 
 # 出力ファイルとして保存
 output_csv_file_path = 'cooccurrence_network.csv'
-cooccurrence_df.to_csv(output_csv_file_path, index=False)
+cooccurrence_df.to_csv(output_csv_file_path, index=False,encoding='utf-8-sig')
 
 # 表の表示
 print(cooccurrence_df)
