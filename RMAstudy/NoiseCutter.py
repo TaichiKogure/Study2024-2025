@@ -160,3 +160,36 @@ nx.draw(G, pos, with_labels=True, node_size=500, node_color="skyblue", edge_colo
         edge_cmap=plt.cm.Blues)
 plt.title("Co-occurrence Network")
 plt.show()
+
+#%%
+import pandas as pd
+import os
+from itertools import combinations
+from collections import Counter
+
+# 前処理されたデータの読み込み
+csv_file_path = 'output_with_nouns.csv'
+df = pd.read_csv(csv_file_path)
+
+# 名詞カラムのリストを取得
+nouns_columns = [col for col in df.columns if col.startswith('Nouns_')]
+
+# 共起関係の収集
+cooccurrences = Counter()
+for col in nouns_columns:
+    for nouns_list in df[col].dropna():
+        # 評価名詞リストの空でない行に対する共起ペア
+        noun_pairs = combinations(nouns_list.strip('][').replace("'", "").split(', '), 2)
+        cooccurrences.update(noun_pairs)
+
+# 共起関係をデータフレームに変換
+cooccurrence_df = pd.DataFrame(cooccurrences.items(), columns=['Pair', 'Frequency'])
+cooccurrence_df[['Word1', 'Word2']] = pd.DataFrame(cooccurrence_df['Pair'].tolist(), index=cooccurrence_df.index)
+cooccurrence_df.drop(columns=['Pair'], inplace=True)
+
+# 出力ファイルとして保存
+output_csv_file_path = 'cooccurrence_network.csv'
+cooccurrence_df.to_csv(output_csv_file_path, index=False)
+
+# 表の表示
+print(cooccurrence_df)
