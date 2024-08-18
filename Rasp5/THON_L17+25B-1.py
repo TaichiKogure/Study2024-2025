@@ -48,12 +48,6 @@ csv_writer = csv.writer(open(csvfile, "w"))
 csv_writer.writerow(["datetime", "temp_C_sensor1", "temp_C_sensor2"])  # Changed header to datetime
 
 
-# def makerobo_print(x):
-#     if x == 1:
-#         print('Better')
-#     if x == 0:
-#         print('Too Hot !!')
-
 def makerobo_loop(runtime):
     start_time = datetime.now()
     makerobo_Status = 1
