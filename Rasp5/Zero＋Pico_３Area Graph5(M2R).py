@@ -48,9 +48,9 @@ def plot_lines(ax, x_data, y_data_dict, labels, colors, linestyles, ylabel, y_sc
 
 
 def create_subplot(index, row, x_data, y_data_dict, labels, colors, linestyles, ylabel, y_scale=None, sharex=None):
-    ax = plt.subplot(5, 1, index, sharex=sharex)
+    ax = plt.subplot(3, 2, index, sharex=sharex)
     plot_lines(ax, x_data, y_data_dict, labels, colors, linestyles, ylabel, y_scale)
-    if index == row:
+    if index >= 5:
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d %H:%M:%S'))
     return ax
 
@@ -71,14 +71,14 @@ def plot_data(start_time=None, y_scales=None):
         x_start = pd.to_datetime(start_time) if start_time else bed_data.index.min()
         x_end = bed_data.index.max()
 
-        ax1 = create_subplot(1, 5, bed_data.index, {
+        ax1 = create_subplot(1, 6, bed_data.index, {
             'CO2': bed_data['CO2'],
             'CO2_LR': lr_data['CO2']
         },
                              ['BedRoom', 'DiningRoom'], ['c', 'k'], ['solid', 'solid'], 'CO2',
                              y_scales.get('CO2') if y_scales else None)
 
-        ax2 = create_subplot(2, 5, bed_data.index, {
+        ax2 = create_subplot(2, 6, bed_data.index, {
             'BedRoom Temperature': bed_data['Tempereture'],
             'Outside Temperature': out_data['Temperature-outside'],
             'L_temp1': lroom_data['temp_C_sensor1'],
@@ -91,7 +91,7 @@ def plot_data(start_time=None, y_scales=None):
                              'Temperature',
                              y_scales.get('Temperature') if y_scales else None, sharex=ax1)
 
-        ax3 = create_subplot(3, 5, bed_data.index, {
+        ax3 = create_subplot(3, 6, bed_data.index, {
             'BedRoom Humidity': bed_data['Humidity'],
             'Outside Humidity': out_data['Humidity-outside'],
             'Humid_LR': lr_data['Humidity_DHT11']
@@ -102,7 +102,7 @@ def plot_data(start_time=None, y_scales=None):
                              'Humidity',
                              y_scales.get('Humidity') if y_scales else None, sharex=ax1)
 
-        ax4 = create_subplot(4, 5, bed_data.index, {
+        ax4 = create_subplot(4, 6, bed_data.index, {
             'BedRoom Pressure': bed_data['Pressure'],
             'Outside Pressure': out_data['Pressure-outside']
         },
@@ -112,7 +112,7 @@ def plot_data(start_time=None, y_scales=None):
                              'Pressure',
                              y_scales.get('Pressure') if y_scales else None, sharex=ax1)
 
-        ax5 = create_subplot(5, 5, bed_data.index, {
+        ax5 = create_subplot(5, 6, bed_data.index, {
             'BedRoom GasResistance': bed_data['GasResistance'],
             'Outside GasResistance': out_data['GasResistance-outside'],
             'Gas_LR': lr_data['AnalogValue']
@@ -123,6 +123,28 @@ def plot_data(start_time=None, y_scales=None):
                              'GasResistance',
                              y_scales.get('GasResistance') if y_scales else None, sharex=ax1)
 
+        # Calculate and plot normalized GasResistance values
+        bed_data['GasResistance_Avg'] = bed_data['GasResistance'].expanding().mean()
+        out_data['GasResistance_Avg'] = out_data['GasResistance-outside'].expanding().mean()
+        lr_data['AnalogValue_Avg'] = lr_data['AnalogValue'].expanding().mean()
+
+        bed_data['GasResistance_Normalized'] = bed_data['GasResistance'] / bed_data['GasResistance_Avg'].shift(
+            1).fillna(1)
+        out_data['GasResistance_Normalized'] = out_data['GasResistance-outside'] / out_data['GasResistance_Avg'].shift(
+            1).fillna(1)
+        lr_data['AnalogValue_Normalized'] = lr_data['AnalogValue'] / lr_data['AnalogValue_Avg'].shift(1).fillna(1)
+
+        ax6 = create_subplot(6, 6, bed_data.index, {
+            'BedRoom GasResistance Normalized': bed_data['GasResistance_Normalized'],
+            'Outside GasResistance Normalized': out_data['GasResistance_Normalized'],
+            'Gas_LR Normalized': lr_data['AnalogValue_Normalized']
+        },
+                             ['BedRoom', 'Outside', 'DiningRoom'],
+                             ['m', 'm', 'gray'],
+                             ['solid', 'dashed', 'solid'],
+                             'GasResistance Normalized',
+                             y_scales.get('GasResistance Normalized') if y_scales else None, sharex=ax1)
+
         plt.xlim(x_start, x_end)
         plt.tight_layout()
         plt.draw()
@@ -130,5 +152,5 @@ def plot_data(start_time=None, y_scales=None):
 
 
 plot_data(start_time="2024-08-21 22:30:00",
-          y_scales={'CO2': (420, 1000), 'Temperature': (21, 40), 'Humidity': (30, 80), 'Pressure': (990, 1005),
-                    'GasResistance': (10000, 150000)})
+          y_scales={'CO2': (400, 1000), 'Temperature': (22, 42), 'Humidity': (35, 85), 'Pressure': (993, 1005),
+                    'GasResistance': (10000, 150000), 'GasResistance Normalized': (0.5, 1.8)})
