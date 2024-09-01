@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 # CSVファイルを読み込む
 # df = pd.read_csv('EnvInfodata01.csv')
-df = pd.read_csv('Rasp5/Env_data.csv')
+df = pd.read_csv('Env_data.csv')
 
 # 'current_time' 列を datetime フォーマットに変換
 df['current_time'] = pd.to_datetime(df['current_time'])
