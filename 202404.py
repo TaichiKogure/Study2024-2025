@@ -36,6 +36,16 @@ square_root_of_x = x ** 0.5
 print(fifth_power_of_x)
 print(square_root_of_x)
 #%%
-z = 1+3
-print(z)
+from flask import Flask
+
+app = Flask(__name__)
+
+
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
 
