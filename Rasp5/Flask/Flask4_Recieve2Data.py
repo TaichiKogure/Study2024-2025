@@ -26,7 +26,7 @@ def handle_data():
     data_2 = str(data.get('temperature')[:-1])
     row_data = {"current_time": timestamp, "Pressure": data_1, "Tempereture": data_2}
 
-    with open('PicodataX.csv', 'a', newline='') as f:
+    with open('../PicodataX.csv', 'a', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=["current_time", "Pressure", "Tempereture"])
         if f.tell() == 0:
             writer.writeheader()
@@ -56,7 +56,7 @@ def handle_data2():
         "GasResistance": gas_resistance,
     }
 
-    with open('BedRoomEnv.csv', 'a', newline='') as f:
+    with open('../BedRoomEnv.csv', 'a', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=row_data.keys())
         if f.tell() == 0:
             writer.writeheader()

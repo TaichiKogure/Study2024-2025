@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # CSVファイルを読み込む
-file_path = "BedRoomEnv.csv"
+file_path = "../BedRoomEnv.csv"
 df = pd.read_csv(file_path, index_col='current_time', parse_dates=True)
 
 # 欠損値を除去する

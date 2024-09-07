@@ -11,8 +11,9 @@ def plot_data(start_time=None, y_scales=None):
 
     while True:
         # Read data from CSV files
-        bed_data = pd.read_csv("BedRoomEnv.csv")
-        out_data = pd.read_csv("OutsideEnv.csv")
+        bed_data = pd.read_csv("../BedRoomEnv.csv")
+        out_data = pd.read_csv("../OutsideEnv.csv")
+        lroom_data = pd.read_csv("/home/koguretaichi/Documents/Pi5_EnvData.csv")
 
         # Converting string date to datetime
         bed_data['current_time'] = pd.to_datetime(bed_data['current_time'])
@@ -20,6 +21,9 @@ def plot_data(start_time=None, y_scales=None):
 
         out_data['current_time'] = pd.to_datetime(out_data['current_time'])
         out_data.set_index('current_time', inplace=True)
+
+        lroom_data['datetime'] = pd.to_datetime(lroom_data['datetime'])
+        lroom_data.set_index('datetime', inplace=True)
 
         # clear the figure each time before drawing new data
         plt.clf()
@@ -42,6 +46,8 @@ def plot_data(start_time=None, y_scales=None):
         plt.plot(bed_data.index, bed_data['Tempereture'], label='BedRoom Temperature', color='r')
         plt.plot(out_data.index, out_data['Temperature-outside'], label='Outside Temperature', color='r',
                  linestyle='dashed')
+        plt.plot(lroom_data.index, lroom_data['temp_C_sensor1'], label='L_temp1', color='orange', linestyle='dotted')
+        plt.plot(lroom_data.index, lroom_data['temp_C_sensor2'], label='L_temp2', color='purple', linestyle='dashdot')
         plt.ylabel('Temperature')
         plt.grid(True)
         if y_scales and 'Temperature' in y_scales:
@@ -88,6 +94,6 @@ def plot_data(start_time=None, y_scales=None):
         plt.pause(60)  # Pause for 60 seconds
 
 
-plot_data(start_time="2024-08-17 09:00:00",
-          y_scales={'CO2': (450, 1000), 'Temperature': (22, 45), 'Humidity': (30, 80), 'Pressure': (995, 1005),
-                    'GasResistance': (10000,100000)})
+plot_data(start_time="2023-01-01 00:00:00",
+          y_scales={'CO2': (0, 1000), 'Temperature': (15, 30), 'Humidity': (20, 80), 'Pressure': (950, 1050),
+                    'GasResistance': None})

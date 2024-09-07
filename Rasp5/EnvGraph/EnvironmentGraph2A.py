@@ -4,7 +4,7 @@ import seaborn as sns  # Use seaborn for jointplot
 from mpl_toolkits.mplot3d import Axes3D  # Import Axes3D for 3D plots
 
 # CSVファイルを読み込む
-df = pd.read_csv('Env_data.csv')
+df = pd.read_csv('../Env_data.csv')
 
 # 'current_time' 列を datetime フォーマットに変換
 df['current_time'] = pd.to_datetime(df['current_time'])

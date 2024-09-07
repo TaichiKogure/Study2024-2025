@@ -10,7 +10,7 @@ def plot_data():
     plt.figure()
 
     while True:
-        data = pd.read_csv("BedRoomEnv.csv")
+        data = pd.read_csv("../BedRoomEnv.csv")
 
         # assuming the csv file has these columns, if different please adjust
         # Converting string date to datetime

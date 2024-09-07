@@ -11,9 +11,8 @@ def plot_data(start_time=None, y_scales=None):
 
     while True:
         # Read data from CSV files
-        bed_data = pd.read_csv("BedRoomEnv.csv")
-        out_data = pd.read_csv("OutsideEnv.csv")
-        lroom_data = pd.read_csv("/home/koguretaichi/Documents/Pi5_EnvData.csv")
+        bed_data = pd.read_csv("../BedRoomEnv.csv")
+        out_data = pd.read_csv("../OutsideEnv.csv")
 
         # Converting string date to datetime
         bed_data['current_time'] = pd.to_datetime(bed_data['current_time'])
@@ -21,9 +20,6 @@ def plot_data(start_time=None, y_scales=None):
 
         out_data['current_time'] = pd.to_datetime(out_data['current_time'])
         out_data.set_index('current_time', inplace=True)
-
-        lroom_data['datetime'] = pd.to_datetime(lroom_data['datetime'])
-        lroom_data.set_index('datetime', inplace=True)
 
         # clear the figure each time before drawing new data
         plt.clf()
@@ -46,8 +42,6 @@ def plot_data(start_time=None, y_scales=None):
         plt.plot(bed_data.index, bed_data['Tempereture'], label='BedRoom Temperature', color='r')
         plt.plot(out_data.index, out_data['Temperature-outside'], label='Outside Temperature', color='r',
                  linestyle='dashed')
-        plt.plot(lroom_data.index, lroom_data['temp_C_sensor1'], label='L_temp1', color='orange', linestyle='dotted')
-        plt.plot(lroom_data.index, lroom_data['temp_C_sensor2'], label='L_temp2', color='purple', linestyle='dashdot')
         plt.ylabel('Temperature')
         plt.grid(True)
         if y_scales and 'Temperature' in y_scales:

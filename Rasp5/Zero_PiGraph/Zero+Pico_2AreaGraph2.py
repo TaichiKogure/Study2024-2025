@@ -11,8 +11,8 @@ def plot_data(start_time=None, y_scales=None):
 
     while True:
         # Read data from CSV files
-        bed_data = pd.read_csv("BedRoomEnv.csv")
-        out_data = pd.read_csv("OutsideEnv.csv")
+        bed_data = pd.read_csv("../BedRoomEnv.csv")
+        out_data = pd.read_csv("../OutsideEnv.csv")
 
         # Converting string date to datetime
         bed_data['current_time'] = pd.to_datetime(bed_data['current_time'])
@@ -88,6 +88,6 @@ def plot_data(start_time=None, y_scales=None):
         plt.pause(60)  # Pause for 60 seconds
 
 
-plot_data(start_time="2023-01-01 00:00:00",
-          y_scales={'CO2': (0, 1000), 'Temperature': (15, 30), 'Humidity': (20, 80), 'Pressure': (950, 1050),
-                    'GasResistance': None})
+plot_data(start_time="2024-08-17 09:00:00",
+          y_scales={'CO2': (450, 1000), 'Temperature': (22, 45), 'Humidity': (30, 80), 'Pressure': (995, 1005),
+                    'GasResistance': (10000,100000)})

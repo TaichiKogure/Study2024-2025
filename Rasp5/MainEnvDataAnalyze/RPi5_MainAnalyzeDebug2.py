@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # CSVファイルを読み込む
-bedroom_file_path = "BedRoomEnv.csv"
-outside_file_path = "OutsideEnv.csv"
+bedroom_file_path = "../BedRoomEnv.csv"
+outside_file_path = "../OutsideEnv.csv"
 
 df_bedroom = pd.read_csv(bedroom_file_path, index_col='current_time', parse_dates=True)
 df_outside = pd.read_csv(outside_file_path, index_col='current_time', parse_dates=True)
