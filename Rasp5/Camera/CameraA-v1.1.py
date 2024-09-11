@@ -1,45 +1,53 @@
 import cv2
-import numpy as np
+import numpy
+
+np
 from PIL import Image, ImageTk
 import tkinter as tk
 from adafruit_servokit import ServoKit
 import threading
 import time
 
+# Initialize ServoKit for controlling servos on 16 channels
 kit = ServoKit(channels=16)
+# Set initial pan and tilt angles
 pan = 20
 tilt = 20
 
-# Initial position
+# Set initial position for servo motors
+# Channel 0 controls Pan, Channel 1 controls Tilt
 kit.servo[0].angle = pan
 kit.servo[1].angle = tilt
 
 
+# Function to convert BGR image to JPEG format
 def bgr8_to_jpeg(value, quality=75):
     return Image.fromarray(cv2.cvtColor(value, cv2.COLOR_BGR2RGB))
 
 
+# Class for the main application
 class App:
     def __init__(self, window, window_title):
         self.window = window
         self.window.title(window_title)
 
-        # Video Frame
+        # Add a label widget for video frame display
         self.video_frame_label = tk.Label(window)
         self.video_frame_label.pack()
 
-        # Servos frame
+        # Frame to hold servo control sliders
         self.servo_frame = tk.Frame(window)
         self.servo_frame.pack()
 
-        # Sliders for manual control
+        # Sliders for manual pan and tilt control
         self.pan_slider = self.create_slider(self.servo_frame, 'Pan', pan, 180, 1, self.update_servo_angles)
         self.tilt_slider = self.create_slider(self.servo_frame, 'Tilt', tilt, 180, 1, self.update_servo_angles)
 
-        # Sliders for color settings
+        # Frame to hold color control sliders
         self.controls_frame = tk.Frame(window)
         self.controls_frame.pack()
 
+        # Sliders for color threshold adjustments
         self.hueLower = self.create_slider(self.controls_frame, 'Hue lower', 96, 179, 1, self.update_color_preview)
         self.hueUpper = self.create_slider(self.controls_frame, 'Hue upper', 120, 179, 1, self.update_color_preview)
         self.hue2Lower = self.create_slider(self.controls_frame, 'Hue2 lower', 50, 255, 1, self.update_color_preview)
@@ -49,22 +57,24 @@ class App:
         self.valLow = self.create_slider(self.controls_frame, 'Val lower', 100, 255, 1, self.update_color_preview)
         self.valHigh = self.create_slider(self.controls_frame, 'Val upper', 255, 255, 1, self.update_color_preview)
 
-        # Color Preview
+        # Label for color preview
         self.color_preview = tk.Label(window, text="Color Preview", bg="white")
         self.color_preview.pack(pady=10)
 
-        # Stop Button
+        # Stop button to stop video display
         self.stop_button = tk.Button(window, text='Stop', command=self.stop_video_display)
         self.stop_button.pack()
 
-        # Stop event
+        # Thread for video display
         self.stop_event = threading.Event()
         self.video_thread = threading.Thread(target=self.video_display, args=(self.stop_event,))
         self.video_thread.daemon = True
         self.video_thread.start()
 
+        # Start the Tkinter main loop
         self.window.mainloop()
 
+    # Function to create a slider for UI
     def create_slider(self, parent, label, value, max_value, step, command=None):
         frame = tk.Frame(parent)
         frame.pack()
@@ -75,6 +85,7 @@ class App:
         slider.pack(side=tk.RIGHT)
         return slider
 
+    # Function to update servo angles based on slider values
     def update_servo_angles(self, _=None):
         global pan
         global tilt
@@ -82,6 +93,7 @@ class App:
             pan = self.pan_slider.get()
             tilt = self.tilt_slider.get()
 
+            # Ensure pan and tilt angles within range
             if pan > 180:
                 pan = 180
                 print("Pan Out of Range")
@@ -95,6 +107,7 @@ class App:
                 tilt = 0
                 print("Tilt Out of Range")
 
+            # Update servo angles
             kit.servo[0].angle = 180 - pan
             kit.servo[1].angle = 180 - tilt
         except IOError as e:
@@ -103,10 +116,12 @@ class App:
             else:
                 print(f"その他のI/Oエラー: {e}")
 
+    # Function to stop video display thread
     def stop_video_display(self):
         self.stop_event.set()
         self.video_thread.join()
 
+    # Function to update the color preview based on slider values
     def update_color_preview(self, _=None):
         lower_hue = self.hueLower.get()
         upper_hue = self.hueUpper.get()
@@ -123,24 +138,30 @@ class App:
         lower_bound2 = np.uint8([[[lower_hue2, sat_low, val_low]]])
         upper_bound2 = np.uint8([[[upper_hue2, sat_high, val_high]]])
 
+        # Image for color preview
         img = np.zeros((100, 200, 3), np.uint8)
         img[:, :100] = cv2.cvtColor(lower_bound, cv2.COLOR_HSV2BGR)
         img[:, 100:] = cv2.cvtColor(upper_bound, cv2.COLOR_HSV2BGR)
         img[:, :100] = cv2.cvtColor(lower_bound2, cv2.COLOR_HSV2BGR)
         img[:, 100:] = cv2.cvtColor(upper_bound2, cv2.COLOR_HSV2BGR)
 
+        # Update color preview label
         img = Image.fromarray(img)
         img_tk = ImageTk.PhotoImage(image=img)
         self.color_preview.config(image=img_tk)
         self.color_preview.image = img_tk
+
+        # Function for video display and object tracking
 
     def video_display(self, stop_event):
         global pan
         global tilt
         try:
             picamera = Picamera2()
-            config = picamera.create_preview_configuration(main={"format": 'RGB888', "size": (320, 240)},
-                                                           raw={"format": "SRGGB12", "size": (1920, 1080)})
+            config = picamera.create_preview_configuration(
+                main={"format": 'RGB888', "size": (320, 240)},
+                raw={"format": "SRGGB12", "size": (1920, 1080)}
+            )
             config["transform"] = libcamera.Transform(hflip=False, vflip=True)
             picamera.configure(config)
             picamera.start()
@@ -149,6 +170,7 @@ class App:
                 frame = picamera.capture_array()
                 hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
+                # Get color range values from sliders
                 hueLow = self.hueLower.get()
                 hueUp = self.hueUpper.get()
                 hue2Low = self.hue2Lower.get()
@@ -160,7 +182,6 @@ class App:
 
                 I_b = np.array([hueLow, Ls, Lv])
                 u_b = np.array([hueUp, Us, Uv])
-
                 I_b2 = np.array([hue2Low, Ls, Lv])
                 u_b2 = np.array([hue2Up, Us, Uv])
                 FGmask = cv2.inRange(hsv, I_b, u_b)
@@ -170,6 +191,7 @@ class App:
                 contours, _ = cv2.findContours(FGmaskComp, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                 contours = sorted(contours, key=lambda x: cv2.contourArea(x), reverse=True)
 
+                # Object tracking and servo adjustment
                 for cnt in contours:
                     area = cv2.contourArea(cnt)
                     (x, y, w, h) = cv2.boundingRect(cnt)
@@ -187,6 +209,7 @@ class App:
 
                     break
 
+                # Display frame
                 frame_img = bgr8_to_jpeg(frame)
                 frame_photo = ImageTk.PhotoImage(image=frame_img)
                 self.video_frame_label.config(image=frame_photo)
@@ -198,5 +221,6 @@ class App:
             picamera.stop()
 
 
+# Initialize the application
 if __name__ == "__main__":
     App(tk.Tk(), "Object Tracking with Servo Control")
