@@ -4,6 +4,38 @@
 # Example: rospy.init_node('example_node')
 # More implementation would go here for publishers/subscribers.
 
+# Import libraries for decision tree analysis
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.datasets import fetch_openml
+
+# Load Pima Indians Diabetes Dataset from UCI Machine Learning Repository (via OpenML)
+df = fetch_openml(name='diabetes', version=1, as_frame=True).frame
+
+# Split the dataset into features and target
+X = df.drop(columns=['class'])
+y = df['class']
+
+# Split into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Create and train the decision tree model
+model = DecisionTreeClassifier(random_state=42)
+model.fit(X_train, y_train)
+
+# Make predictions and evaluate the model
+y_pred = model.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+
+# Print the results
+print("Decision Tree Accuracy: {:.2f}%".format(accuracy * 100))
+
+#%%
+
+# ROS 2 imports (unchanged)
 import rclpy  # ROS 2のPythonライブラリ
 from rclpy.node import Node  # ノードクラス
 from std_msgs.msg import String  # トピックで使うメッセージ型
@@ -36,7 +68,6 @@ def main(args=None):
 if __name__ == '__main__':
     main()
 
-
 # 1. Node名: `minimal_publisher`
 # 2. "Hello World"という文字列を1秒ごとに配信。
 # 3. 配信先トピック名: `topic`
@@ -51,3 +82,6 @@ if __name__ == '__main__':
 # 以下はシンプルな例で、バギーに一定の速度指令を送るPublisherノードをPythonで書いてみます。
 ## ROS 2でのバギー制御用コード例
 # このコードでは、`geometry_msgs/Twist` というメッセージ型を用いて、バギーに速度指令を送ります。
+
+#%%
+
