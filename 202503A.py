@@ -35,3 +35,10 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
+
+
+# 1. Node名: `minimal_publisher`
+# 2. "Hello World"という文字列を1秒ごとに配信。
+# 3. 配信先トピック名: `topic`
+# 4. メッセージ型: `std_msgs.msg.String`
+
