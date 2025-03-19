@@ -84,4 +84,4 @@ if __name__ == '__main__':
 # このコードでは、`geometry_msgs/Twist` というメッセージ型を用いて、バギーに速度指令を送ります。
 
 #%%
-# Uploading test
+# Uploading test777
