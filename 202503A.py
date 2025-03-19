@@ -34,7 +34,7 @@ accuracy = accuracy_score(y_test, y_pred)
 print("Decision Tree Accuracy: {:.2f}%".format(accuracy * 100))
 
 #%%
-
+test
 # ROS 2 imports (unchanged)
 import rclpy  # ROS 2のPythonライブラリ
 from rclpy.node import Node  # ノードクラス
