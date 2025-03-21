@@ -8,9 +8,14 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.metrics import accuracy_score
 from sklearn.datasets import fetch_openml
+import matplotlib
+
+import matplotlib.pyplot as plt
+plt.ion()  # インタラクティブモードを有効化
+matplotlib.use('TkAgg')  # または 'Qt5Agg' を試す
 
 # Load Pima Indians Diabetes Dataset from UCI Machine Learning Repository (via OpenML)
 df = fetch_openml(name='diabetes', version=1, as_frame=True).frame
@@ -32,6 +37,11 @@ accuracy = accuracy_score(y_test, y_pred)
 
 # Print the results
 print("Decision Tree Accuracy: {:.2f}%".format(accuracy * 100))
+
+# Visualize the decision tree
+plt.figure(figsize=(20, 10))
+plot_tree(model, feature_names=X.columns, class_names=model.classes_, filled=True, rounded=True)
+plt.show()
 
 #%%
 test
@@ -85,3 +95,43 @@ if __name__ == '__main__':
 
 #%%
 # Uploading test777
+from sklearn.datasets import fetch_openml
+import matplotlib
+
+import matplotlib.pyplot as plt
+
+plt.ion()  # インタラクティブモードを有効化
+matplotlib.use('TkAgg')  # または 'Qt5Agg' を試す
+
+# Load Pima Indians Diabetes Dataset from UCI Machine Learning Repository (via OpenML)
+df = fetch_openml(name='diabetes', version=1, as_frame=True).frame
+
+# Split the dataset into features and target
+X = df.drop(columns=['class'])
+y = df['class']
+
+# Split into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Create and train the decision tree model
+model = DecisionTreeClassifier(random_state=42)
+model.fit(X_train, y_train)
+
+# Make predictions and evaluate the model
+y_pred = model.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+
+# Print the results
+print("Decision Tree Accuracy: {:.2f}%".format(accuracy * 100))
+
+# Visualize the decision tree with increased font size
+plt.figure(figsize=(30, 20), dpi=100)  # サイズを拡大し解像度を向上
+plot_tree(
+    model,
+    feature_names=X.columns,
+    class_names=model.classes_,
+    filled=True,
+    rounded=True,
+    fontsize=12  # フォントサイズを拡大
+)
+plt.show()
