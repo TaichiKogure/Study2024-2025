@@ -1,3 +1,0 @@
-# あああ
-# Test AttributeError
-
