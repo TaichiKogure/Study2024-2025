@@ -2,6 +2,8 @@
 
 This project analyzes environmental data from multiple sensors located in different areas (Bedroom, Living Room, Outside, and Desk) to identify trends in temperature, humidity, CO2 levels, and pressure over time, by season, and by time of day.
 
+An interactive dashboard is also available for more dynamic exploration of the data. See the [Dashboard](#dashboard) section for details.
+
 ## Data Sources
 
 The analysis uses the following CSV files:
@@ -103,6 +105,38 @@ The script generates multiple PNG files in the `analysis_results` directory:
 - `monthly_comparison.png`: Monthly comparison tables for temperature, humidity, CO2, and pressure
 - `temperature_ml_*.png`: Machine learning analysis of temperature patterns for each location
 - `co2_ml_*.png`: Machine learning analysis of CO2 patterns for each location
+
+## Dashboard
+
+An interactive dashboard is available for more dynamic exploration of the environmental data. The dashboard provides:
+
+- Interactive time series visualization
+- Daily, seasonal, and monthly pattern analysis
+- Weekday vs weekend comparisons
+- Statistical distribution analysis
+- Heatmap visualizations
+
+### How to Run the Dashboard
+
+1. Ensure you have Python 3.6+ installed
+2. Install the required packages:
+   ```
+   pip install dash pandas numpy plotly
+   ```
+3. Navigate to the dashboard directory:
+   ```
+   cd TempAnalysis/dashboard
+   ```
+4. Run the dashboard:
+   ```
+   python app.py
+   ```
+5. Open a web browser and go to:
+   ```
+   http://127.0.0.1:8050/
+   ```
+
+For more details, see the [dashboard README](dashboard/README.md).
 
 ## Notes
 
