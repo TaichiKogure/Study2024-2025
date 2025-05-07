@@ -1311,7 +1311,7 @@ def main():
     }
 
     # Define output directory
-    output_dir = 'G:\\Study2024-2025\\CO2Analysis\\analysis_results'
+    output_dir = 'G:\\Study2024-2025\\CO2Analysis\\analysis_results2'
 
     # Create analyzer
     analyzer = CO2DataAnalyzer(data_files, output_dir)

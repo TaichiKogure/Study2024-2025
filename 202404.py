@@ -1,54 +1,22 @@
 import matplotlib
 
-matplotlib.use('Qt5Agg')  # または 'Agg', 'WebAgg', 'TkAgg', など
+# matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
-
 import numpy as np
 
+x = np.arange(0, 1.5, 0.1)
 
-# Define the func(x,y)
-def func(x, y):
-    return x * y + 3 * x * x
+y1 = np.sin(x)
+plt.plot(x, y1, label='sin(x)')
 
+y2 = np.cos(x)
+plt.plot(x, y2, label='cos(x)')
 
-figure = plt.figure()
-ax = figure.add_subplot(111, projection='3d')
+y3 = np.tan(x)
+plt.plot(x, y3, label='tan(x)')
 
-x = np.linspace(-5, 5, 100)
-y = np.linspace(-5, 5, 100)
-
-x, y = np.meshgrid(x, y)
-z = func(x, y)
-
-ax.plot_surface(x, y, z, color='y')
+plt.xlabel("x")
+plt.ylabel("Wave Function")
+plt.title("Sine, Cosine, and Tangent Waves")
+plt.legend()
 plt.show()
-
-#%%
-#
-# x = 5
-# y = -6
-#
-# x_plus_y = x + y
-# x_minus_y = x - y
-# x_times_y = x * y
-# x_divided_by_y = x / y
-#
-# fifth_power_of_x = x ** 5
-# square_root_of_x = x ** 0.5
-#
-# print(fifth_power_of_x)
-# print(square_root_of_x)
-# #%%
-# from flask import Flask
-#
-# app = Flask(__name__)
-#
-#
-# @app.route('/')
-# def hello_world():
-#     return 'Hello, World!'
-#
-#
-# if __name__ == "__main__":
-#     app.run(debug=True)
-#
